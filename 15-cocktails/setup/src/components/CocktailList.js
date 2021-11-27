@@ -1,14 +1,29 @@
-import React from 'react'
-import Cocktail from './Cocktail'
-import Loading from './Loading'
-import { useGlobalContext } from '../context'
+import React from "react";
+import Cocktail from "./Cocktail";
+import { useGlobalContext } from "../context";
+// import { StaticRouter } from "react-router-dom";
 
 const CocktailList = () => {
-  return (
-    <div>
-      <h2>cocktail list component</h2>
-    </div>
-  )
-}
+  const { state } = useGlobalContext();
 
-export default CocktailList
+  return (
+    <>
+      <section className="section">
+        <h2 className="section-title">
+          {state.error
+            ? "No Cocktails Matched Your Search Criteria"
+            : "Cocktails"}
+        </h2>
+        {!state.error && (
+          <div className="cocktails-center">
+            {state.cocktails.drinks.map((drink) => {
+              return <Cocktail cocktail={drink} key={drink.idDrink}></Cocktail>;
+            })}
+          </div>
+        )}
+      </section>
+    </>
+  );
+};
+
+export default CocktailList;
